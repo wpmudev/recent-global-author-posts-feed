@@ -1,0 +1,19 @@
+Plugin Name: Recent Global Author Posts Feed
+Author: Andrew Billits
+
+Files:
+----------------------------------------------------------------------
+
+recent-global-author-posts-feed.php - goes in /wp-content
+
+Instructions:
+----------------------------------------------------------------------
+1) Place the files in the specified directories
+
+Feed is located at:
+http://yourdomain.tld/wp-content/recent-global-author-posts-feed.php?author=USERID
+
+Replace USERID with the user id of the author.
+
+Please note that this widget requires the Post Indexer plugin to be installed:
+http://premium.wpmudev.org/project/post-indexer
