@@ -4,7 +4,7 @@ Plugin Name: Recent Global Author Posts Feed
 Plugin URI:
 Description: RSS2 feeds
 Author: Andrew Billits (Incsub)
-Version: 2.0
+Version: 2.1
 Author URI:
 WDP ID: 87
 */
@@ -55,20 +55,27 @@ if ( empty( $author ) ) {
 	$author = '0';
 }
 
+$posttype = $_GET['posttype'];
+if(empty($posttype)) {
+	$posttype = 'post';
+}
+
 //------------------------------------------------------------------------//
 //---Functions------------------------------------------------------------//
 //------------------------------------------------------------------------//
-$query = "SELECT * FROM " . $wpdb->base_prefix . "site_posts WHERE site_id = '" . $current_site->id . "' AND post_author = '" . $author . "' AND blog_public = '1' ORDER BY post_published_gmt DESC LIMIT " . $number;
+global $wpdb;
+
+$query = $wpdb->prepare("SELECT * FROM " . $wpdb->base_prefix . "site_posts WHERE site_id = %d AND post_author = %s AND blog_public = '1' AND post_type = %s ORDER BY post_published_gmt DESC LIMIT %d", $current_site->id, $author, $posttype, $number);
 $posts = $wpdb->get_results( $query, ARRAY_A );
 
 if ( count( $posts ) > 0 ) {
-	$last_published_post_date_time = $wpdb->get_var("SELECT post_published_gmt FROM " . $wpdb->base_prefix . "site_posts WHERE site_id = '" . $current_site->id . "' AND post_author = '" . $author . "' AND blog_public = '1' ORDER BY post_published_gmt DESC LIMIT 1");
+	$last_published_post_date_time = $wpdb->get_var( $wpdb->prepare("SELECT post_published_gmt FROM " . $wpdb->base_prefix . "site_posts WHERE site_id = %d AND post_author = %s AND blog_public = '1' AND post_type = %s ORDER BY post_published_gmt DESC LIMIT 1", $current_site->id, $author, $posttype ) );
 } else {
 	$last_published_post_date_time = time();
 }
 
 if ( $author > 0 ) {
-	$author_user_login = $wpdb->get_var("SELECT user_login FROM " . $wpdb->base_prefix . "users WHERE ID = '" . $author . "'");
+	$author_user_login = $wpdb->get_var( $wpdb->prepare("SELECT user_login FROM " . $wpdb->base_prefix . "users WHERE ID = %s", $author ) );
 }
 
 header('Content-Type: text/xml; charset=' . get_option('blog_charset'), true);
@@ -96,7 +103,7 @@ $more = 1;
 	//--------------------------------------------------------------------//
 	if ( count( $posts ) > 0 ) {
 		foreach ($posts as $post) {
-			$author_display_name = $wpdb->get_var("SELECT display_name FROM " . $wpdb->base_prefix . "users WHERE ID = '" . $post['post_author'] . "'");
+			$author_display_name = $wpdb->get_var( $wpdb->prepare( "SELECT display_name FROM " . $wpdb->base_prefix . "users WHERE ID = %d", $post['post_author']) );
 			?>
 			<item>
 				<title><?php echo stripslashes($post['post_title']); ?></title>
