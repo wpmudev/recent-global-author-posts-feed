@@ -4,7 +4,7 @@ Plugin Name: Recent Global Author Posts Feed
 Plugin URI:
 Description: RSS2 feeds
 Author: Andrew Billits (Incsub) / Barry (Incsub)
-Version: 2.2
+Version: 2.3
 Author URI:
 WDP ID: 87
 */
