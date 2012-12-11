@@ -3,7 +3,7 @@
 Plugin Name: Recent Global Author Posts Feed
 Plugin URI:
 Description: RSS2 feeds for global posts by authors - to access feed go to http://yoursite.com/feed/globalauthorpostsfeed
-Version: 3.0 RC 1
+Version: 3.0
 Author: Barry (Incsub)
 Author URI:
 WDP ID: 87
