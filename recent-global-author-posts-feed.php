@@ -35,15 +35,9 @@ $more = 1;
 
 echo '<?xml version="1.0" encoding="' . get_option('blog_charset') . '"?' . '>';
 
-$number = $_GET['number'];
-if ( empty( $number ) ) {
-	$number = '25';
-}
+$number = isset($_GET['number']) ? $_GET['number'] : 25;
 
-$author = $_GET['author'];
-if ( empty( $author ) ) {
-	$author = 1;
-}
+$author = isset($_GET['author']) ? $_GET['author'] : 1;
 
 if(!is_numeric($author)) {
 	// We could have the user login of the user so find the id from that
@@ -55,12 +49,9 @@ if(!is_numeric($author)) {
 	$theauthor = get_user_by( 'id', $author );
 }
 
-$posttype = $_GET['posttype'];
-if(empty($posttype)) {
-	$posttype = 'post';
-}
+$posttype = isset($_GET['posttype']) ? $_GET['posttype'] : 'post';
 
-$network_query = network_query_posts( array( 'post_type' => $posttype, 'posts_per_page' => $number, 'author' => $author ));
+$network_query_posts = network_query_posts( array( 'post_type' => $posttype, 'posts_per_page' => $number, 'author' => $author ));
 
 ?>
 <rss version="2.0"
