@@ -41,6 +41,8 @@ class globalauthorpostsfeed {
 			// Only add the feed for the main site
 			add_action( 'init', array( $this, 'initialise_global_author_posts_feed' ) );
 		}
+
+		add_filter( 'ms_user_row_actions', array( $this, 'add_user_row_action' ), 10, 2 );
 	}
 
 	function initialise_global_author_posts_feed() {
@@ -132,6 +134,14 @@ class globalauthorpostsfeed {
 		</channel>
 		</rss>
 		<?php
+	}
+
+	function add_user_row_action( $actions, $user ) {
+		$actions['authorfeed'] = sprintf(
+			'<a href="%s" target="_blank">Feed</a>',
+			esc_url( add_query_arg( 'author', $user->ID, site_url( '/feed/globalauthorpostsfeed' ) ) )
+		);
+		return $actions;
 	}
 
 }
