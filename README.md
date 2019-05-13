@@ -2,6 +2,10 @@
 
 **INACTIVE NOTICE: This plugin is unsupported by WPMUDEV, we've published it here for those technical types who might want to fork and maintain it for their needs.**
 
+## Translations
+
+Translation files can be found at https://github.com/wpmudev/translations
+
 ## Global Author Posts Feed grabs all the posts from a single author, from across an entire Multisite or BuddyPress network, and puts them in a single feed.
 
 A feed just for a selected author that combines all their posts into one big RSS job.
